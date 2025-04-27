@@ -1,0 +1,26 @@
+name: Run blank.py check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+    - name: Run blank.py script
+      run: |
+        python blank.py > output.txt
+        if grep -q "IlyaTHEbest" output.txt; then
+          echo "Test passed: 'IlyaTHEbest' found in output!"
+        else
+          echo "Test failed: 'IlyaTHEbest' NOT found in output!"
+          exit 1
+        fi
