@@ -1,4 +1,4 @@
-name: Build and Push Docker image
+name: Run blank.py check
 
 on:
   push:
@@ -11,16 +11,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python
+    - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x'
-    - name: Run blank.py
+        python-version: '3.9'
+    - name: Run blank.py script
       run: |
-        python blank.py
+        python blank.py > output.txt
         if grep -q "IlyaTHEbest" output.txt; then
-          echo "Script executed successfully"
+          echo "Test passed: 'IlyaTHEbest' found in output!"
         else
-          echo "Script failed to execute"
+          echo "Test failed: 'IlyaTHEbest' NOT found in output!"
           exit 1
         fi
