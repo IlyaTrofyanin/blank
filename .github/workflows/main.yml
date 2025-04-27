@@ -1,0 +1,26 @@
+name: Build and Push Docker image
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Run blank.py
+      run: |
+        python blank.py
+        if grep -q "IlyaTHEbest" output.txt; then
+          echo "Script executed successfully"
+        else
+          echo "Script failed to execute"
+          exit 1
+        fi
